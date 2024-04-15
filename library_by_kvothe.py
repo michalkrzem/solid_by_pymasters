@@ -23,8 +23,7 @@ class SearchByAuthor(Searcher):
         for i in catalog_by_kvothe:
             if i.__dict__["author"] == author:
                 searching_books.append(i)
-            else:
-                return "We don't have this book"
+
         return searching_books
 
 
@@ -34,8 +33,7 @@ class SearchByTitle(Searcher):
         for i in catalog_by_kvothe:
             if i.__dict__["title"] == title:
                 searching_books.append(i)
-            else:
-                return "We don't have this book"
+
         return searching_books
 
 
@@ -45,8 +43,7 @@ class SearchByBook(Searcher):
         for i in catalog_by_kvothe:
             if i == book:
                 searching_books.append(i)
-            else:
-                return "We don't have this book"
+
         return searching_books
 
 

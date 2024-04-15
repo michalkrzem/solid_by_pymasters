@@ -56,23 +56,12 @@ class SearchByTitle(Searcher):
 ```
 ---
 3. Liskov Substitution
-  - Zaimplementowałem klasę Member, która w konstruktorze przyjmuje klasę User dzięki czemu jest odporna na zmiany pól w userze.
-```python
-class User:
-    def __init__(self, name: str, surname: str, birth_year: int):
-        pass
+  - Podklasy Searcher można używać zamiennie w kontekście, w którym oczekiwany jest Searcher, na przykład w LibraryCatalog.search_book_from_catalog, który akceptuje dowolną podklasę Searcher.
 
-
-class Member:
-    def __init__(self, user: User, borrowed_books=None):
-        pass
-    def borrow_a_book(self, book: Book):
-        pass
-```
 4. Interface Segregation - czy można tu podpiąć kwestię różnych klas odpowiedzialnych za szukanie
 ---
 5. Dependency Inversion
-  - za searcher podstawiamy interfejs Searcher, dzięki czemu "nie interesują nas" szczegóły implementacyjne
+  - LibraryCatalog opiera się na abstrakcji (Searcher), a nie na konkretnych implementacjach (SearchByAuthor itp.),
 ```python
 def search_book_from_catalog(self, variable, searcher: Searcher):
     return searcher.search_book(variable, self.catalog_by_kvothe)

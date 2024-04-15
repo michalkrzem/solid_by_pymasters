@@ -107,7 +107,7 @@ def test_search_none_exist_book():
     searcher_by_book = SearchByBook()
     searching_book = library_catalog_manager.search_book_from_catalog(book_none_exist, searcher_by_book)
 
-    assert searching_book == "We don't have this book"
+    assert searching_book == []
 
 
 def test_user():
