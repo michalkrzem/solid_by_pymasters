@@ -2,7 +2,8 @@ import json
 
 import pytest
 
-from library_by_kvothe import Book, LibraryCatalog, SearchByAuthor, SearchByTitle
+from library_by_kvothe import Book, LibraryCatalog, SearchByAuthor, SearchByTitle, Member, \
+    SearchByBook, User
 
 
 def test_book_class():
@@ -83,3 +84,64 @@ def test_search_book_by_title():
     title_searcher = SearchByTitle()
     searching_book = library_catalog_manager.search_book_from_catalog("The name of the wind", title_searcher)
     assert book_5 in searching_book
+
+
+def test_search_none_exist_book():
+    book_5 = Book(
+        id=4,
+        title="The name of the wind",
+        author="Patrick Rothfuss",
+        isbn=125445,
+        theme="Fantasy"
+    )
+    book_none_exist = Book(
+        id=5,
+        title="The name of the wind 2",
+        author="Patrick Rothfuss",
+        isbn=1254453434343,
+        theme="Fantasy"
+    )
+    library_catalog_manager = LibraryCatalog()
+    library_catalog_manager.add_book(book_5)
+
+    searcher_by_book = SearchByBook()
+    searching_book = library_catalog_manager.search_book_from_catalog(book_none_exist, searcher_by_book)
+
+    assert searching_book == "We don't have this book"
+
+
+def test_user():
+    user_1 = User(
+        name="Michael",
+        surname="Kowalski",
+        birth_year=1999
+    )
+    member = Member(user_1)
+
+    assert member.user.name == "Michael"
+
+
+def test_borrow_book():
+    book_5 = Book(
+        id=4,
+        title="The name of the wind",
+        author="Patrick Rothfuss",
+        isbn=125445,
+        theme="Fantasy"
+    )
+    library_catalog_manager = LibraryCatalog()
+    library_catalog_manager.add_book(book_5)
+
+    searcher_by_book = SearchByBook()
+    searching_book = library_catalog_manager.search_book_from_catalog(book_5, searcher_by_book)
+
+    user_1 = User(
+        name="Michael",
+        surname="Kowalski",
+        birth_year=1999
+    )
+    member = Member(user_1)
+    borrowed_books = member.borrow_a_book(searching_book)
+
+    assert [book_5] in borrowed_books
+
